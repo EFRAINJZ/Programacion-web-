@@ -1,0 +1,74 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+.diseno {
+    padding:0 100px 50px 100px;
+    /*background-color:#DDE0E3;*/
+    
+}
+
+div{
+    color:#29291d;
+    background:#afff94;
+    font-weight:bold;
+    text-align:center;
+   /* padding:200px;
+    
+    
+    width:200px;
+    box-sizing:border-box;
+    margin:20px auto;*/
+}
+h1, h3{
+   color:#d53032;   
+ text-shadow: 0.2em 0.2em 0.20em #3f888f;
+}
+h4{
+ 
+    color:#0b5345   ;   
+ text-shadow: 0.2em 0.2em 0.20em #3f888f;
+}
+.button:link,
+.button:visited{
+    display:block;
+    text-decoration:none;
+    color:#FFF;
+    
+    background-color:#2471a3 ;
+    font-weight:bold;
+    padding:20px;
+    text-align:center;
+    border:2px solid #5D6063;
+    border-radius:5px;
+    
+    width:200px;
+    margin:20px auto;
+}
+.button:hover,
+.button:visited:hover{
+    color:#FFF;
+    background-color:#7fb3d5;
+    
+}
+.button:active,
+.button:visited:active{
+    color:#FFF;
+    background-color:#2980b9 ;
+    
+}
+
+.call-to-action:link,
+.call-to-action:visited {
+    font-style: italic;
+    background-color: #873600 ;
+}
+.call-to-action:hover,
+.call-to-action:visited:hover{
+    background-color: #e59866 ; 
+}
+.call-to-action:active,
+.call-to-action:visited:active{
+    background-color:#ba4a00 ; 
+}

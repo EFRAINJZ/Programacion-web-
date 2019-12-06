@@ -1,74 +1,210 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-.diseno {
-    padding:0 100px 50px 100px;
-    /*background-color:#DDE0E3;*/
-    
+.pictur{
+    width:300px;
+    height:300px;
+     
+}
+  .pictu3{
+    width:150%;
+    height:150%;
+  }
+.colores{
+  background-color: #191919;
+  color: #ff2f6c;
+}
+ .pictu2{
+    width:250px;
+    height:250px;
+  }
+.topnav {
+  width: 100%;
+  display: flex;
+  justify-content:space-around;
+  overflow: hidden;
+  background-color: #333;
 }
 
-div{
-    color:#29291d;
-    background:#afff94;
-    font-weight:bold;
-    text-align:center;
-   /* padding:200px;
-    
-    
-    width:200px;
-    box-sizing:border-box;
-    margin:20px auto;*/
+/* Navbar links */
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
 }
-h1, h3{
-   color:#d53032;   
- text-shadow: 0.2em 0.2em 0.20em #3f888f;
+
+/* Links - change color on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
 }
-h4{
+.illustration img{
+  width:100%;
+  display:block;
+}
+.header{
+  height:auto;
+  justify-content:inherit;
+  align-items: inherit;
+}
+.photo img{
+  width:100%;
+  display: block;
+}
+.page {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.section {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.description{
+  width:100%; 
+  float:right;  
+
+}
+
+.menu {
+  background-color: #5995DA;
+  height: 80px;
+}
+
+.header {
+  background-color: #B2D6FF;
+}
+
+.content {
+  background-color: #EAEDF0;
+  height: 600px;
+}
+
+.sign-up {
+  background-color: #D6E9FE;
+}
+
+.feature-1 {
+  background-color: #F5CF8E;
+  align-items: center;
+
+  flex-direction:column;
+}
+
+.feature-2 {
+  background-color: #F09A9D;
+  align-items: center;
+  flex-direction:column;
+}
+
+.feature-3 {
+  background-color: #C8C6FA;
+  align-items: center;
+  flex-direction:column;
+}
+.feature-4 {
+  background-color: #7Fa7b8;
+  align-items: center;
+  flex-direction:column;
+}
+.feature-5 {
+  background-color: #33546d;
+  align-items: center;
+  flex-direction:column;
+}
+.feature-6 {
+   color:#ffffff;
+  background-color: #c34129;
+  align-items: center;
+  flex-direction:column;
+}
+/* Mobile Styles */
+@media only screen and (max-width: 400px) {
  
-    color:#0b5345   ;   
- text-shadow: 0.2em 0.2em 0.20em #3f888f;
-}
-.button:link,
-.button:visited{
-    display:block;
-    text-decoration:none;
-    color:#FFF;
-    
-    background-color:#2471a3 ;
-    font-weight:bold;
-    padding:20px;
-    text-align:center;
-    border:2px solid #5D6063;
-    border-radius:5px;
-    
+  .description{
+  float: none;
+   display: flex; 
+   flex-direction:column;
+  }
+  .pictur{
     width:200px;
-    margin:20px auto;
-}
-.button:hover,
-.button:visited:hover{
-    color:#FFF;
-    background-color:#7fb3d5;
-    
-}
-.button:active,
-.button:visited:active{
-    color:#FFF;
-    background-color:#2980b9 ;
-    
+    height:200px;
+  }
+   .pictu2{
+    width:200px;
+    height:200px;
+  }
+    .pictu3{
+    width:100%;
+    height:100%;
+  }
+  .section{
+    justify-content: center;
+  }
+
+  body {
+    background-color: #F09A9D; /* Red */
+  }
+
 }
 
-.call-to-action:link,
-.call-to-action:visited {
-    font-style: italic;
-    background-color: #873600 ;
+/* Tablet Styles */
+@media only screen and (min-width: 401px) and (max-width: 960px) {
+  .sign-up,
+  .feature-1,
+  .feature-2,
+  .feature-4,
+  .feature-5,
+  .feature-6,
+  .feature-3 {
+    width: 50%;
+  }
+  .pictur{
+    width:300px;
+    height:300px;
+  }
+  .pictu2{
+    width:250px;
+    height:250px;
+  }
+    .pictu3{
+    width:100%;
+    height:100%;
+  }
 }
-.call-to-action:hover,
-.call-to-action:visited:hover{
-    background-color: #e59866 ; 
-}
-.call-to-action:active,
-.call-to-action:visited:active{
-    background-color:#ba4a00 ; 
+
+
+/* Desktop Styles */
+@media only screen and (min-width: 961px) {
+  .page {
+    width: 960px;
+    margin: 0 auto;
+  }
+  .feature-1,
+  .feature-2,
+  .feature-5,
+  .feature-4,
+  .feature-6,
+  .feature-3 {
+    width: 33.3%;
+  }
+  .header {
+    height: 400px;
+  }
+  .sign-up {
+    height: 200px;
+    order: 1;
+  }
+  .content {
+    order: 2;
+  }
 }

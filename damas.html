@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head >
+<title>Damas españolas</title>
+<link rel='stylesheet' href='Damas-Style.css'/>
+</head>
+<body>
+	 <div class="rigth1">
+    <div><center><h1>DAMAS ESPAÑOLAS.</h1></center><br><center><h2>TURNO ACTUAL.</h2></center></div>
+    <div id="P1" onclick="mas()" >PLAYER 2</div><img src="mario1.png" width="100" height="120">
+    <div id="P2" onclick="mas2()" >PLAYER 1</div><img src="luigui1.png" width="100" height="120">
+    <div id="transition">You would be have a surprise. <div class="transition"> REALIZADO POR: <br> JOSE ZUNÑIGA EFRAÍN <br> AVENDAÑO RAMIREZ JUAN GUILLERMO</div></div>
+  </div>
+
+	<div class="eldivdediv">
+<div id="bigg"class="BigTable" > 
+
+   </div>
+</div>
+<script type="text/javascript">
+	var circles=100;
+	var lroja=[0,0,0,0,0,0,0,0,0,0,0,0];// jugador2
+	var bottom=[0,0,0,0,0,0,0,0,0,0,0,0]; //jugador1
+	var idd=1// controla el id de los cuadros 
+	var si=0,sd=0,ii=0,id=0;
+	var divv=null,padre=null,destinos;
+    var mover=false,veractive=false;
+    var comelones,comidos //quien va a comer
+    var turno=2;
+    var haveanimaciona=false,haveanimaciondiv=false
+    var rojass=12,guindas=12
+    var columna,renglon;
+    var corondo =false
+    var come=false,acomido=false
+    var itemp=-1
+    var hasperdido=false
+    var dsi,dsd,dii,did;
+	var vr1,vr2,v43,vr4;
+  
+	//dibuja el tablero
+	/*
+     si      sd
+      \ o /
+      /   \  
+	 ii       id
+	*/
+  Brillo()
+	for(var j=0;j<8;j++){
+       var divren=document.createElement("div");
+       divren.className="row";
+
+       for(var i=0;i<8;i++)
+           createNewElement(j%2==0?i%2==0?1:0:i%2==0?0:1,j);
+       document.getElementById("bigg").appendChild(divren);
+    }
+    
+    function puedecomer(){
+    	come=false
+        veractive=true
+        var mostrar=""
+        //alert("verificando")
+        var movtemp=mover;
+        mover=false;
+          //usar el turno como referencia
+        var iter=turno==1?101:113;
+        comelones=new Array()
+        destinos=new Array()
+        comidos=new Array()
+        for(var i=0;i<12;i++) { 
+        //console.log("verificando"+(iter+i))
+           si=sd=ii=id=0;
+           caculapadre(iter+i)
+           if(divv){
+           mostrar+="\n\nturno";
+           var rrenglon=renglon,ccolumna=columna
+           mostrar+=turno+" "+"circulo:"+(iter+i)+" Padre:"+padre.id;
+           mostrar+=" Renglon:"+renglon+"Columna:"+columna;
+           mostrar+="\nsi:"+si+" sd:"+sd+" ii:"+ii+" id:"+id;
+           var sii=si,sdd=sd,iii=ii,ider=id
+           vr1=rrenglon%2==0? 4:5;
+           vr2=rrenglon%2==0?3:4;
+           vr3=rrenglon%2==0?4:3;
+           vr4=rrenglon%2==0?5:4;
+           dsi=si==1?document.getElementById(padre.id*1-vr1):null;
+           dsd=sd==1?document.getElementById(padre.id*1-vr2):null;
+           dii=ii==1?document.getElementById(padre.id*1+vr3):null;
+           did=id==1?document.getElementById(padre.id*1+vr4):null;
+           if(rrenglon>2 && ccolumna<4&&sd){
+               //puede comer por la parte superior derecha
+               mostrar+="  hijosd:"+dsd.children.length
+               if(dsd.children.length&&Math.ceil(dsd.firstChild.id/112)!=turno){                 
+                  // si el que sigue esta libre entoces come es igual a true
+                   si=sd=ii=id=0;
+                   caculapadre(dsd.firstChild.id)
+                   //vr1=rrenglon%2==0? 4:5;
+                   vr2=renglon%2==0?3:4;
+                   //vr3=rrenglon%2==0?4:3;
+                   //vr4=rrenglon%2==0?5:4;
+                  // dsi=si==1?document.getElementById(padre.id*1-vr1):null;
+                   var dsdt=sd==1?document.getElementById(padre.id*1-vr2):null;
+                   //dii=ii==1?document.getElementById(padre.id*1+vr3):null;
+                   //did=id==1?document.getElementById(padre.id*1+vr4):null;
+                  if(!dsdt.children.length){
+                  	 comelones.push(document.getElementById(iter+i))
+                  	 comidos.push(dsd)
+                     destinos.push(dsdt)  
+                     mostrar+="\nEste puede comer sd"
+                     come=true
+                  }
+
+               }
+
+            }
+           
+           if(ccolumna>1 && rrenglon>2&&sii){
+               //puede comer por la parte superior izquierda
+               mostrar+="  hijosi:"+dsi.children.length
+               if(dsi.children.length&&Math.ceil(dsi.firstChild.id/112)!=turno){                 
+                   si=sd=ii=id=0;
+                   caculapadre(dsi.firstChild.id)
+                  // si el que sigue esta libre entoces come es igual a true
+                   vr1=renglon%2==0? 4:5;
+                   //vr2=rrenglon%2==0?3:4;
+                   //vr3=rrenglon%2==0?4:3;
+                   //vr4=rrenglon%2==0?5:4;
+                   var dsit=si==1?document.getElementById(padre.id*1-vr1):null;
+                   //dsd=sd==1?document.getElementById(padre.id*1-vr2):null;
+                   //dii=ii==1?document.getElementById(padre.id*1+vr3):null;
+                   //did=id==1?document.getElementById(padre.id*1+vr4):null;
+                   if(!dsit.children.length){
+                   		 comelones.push(document.getElementById(iter+i))
+                  	 comidos.push(dsi)
+                     destinos.push(dsit)
+                      mostrar+="\nEste puede comer si"
+                      come=true
+                   }
+               }
+                
+           }
+           if(rrenglon<7 && ccolumna<4 &&ider){
+               //puede comer por la parte superior derecha
+               mostrar+="hijoid:"+did.children.length
+               if(did.children.length&&Math.ceil(did.firstChild.id/112)!=turno){
+                   si=sd=ii=id=0;
+                   caculapadre(did.firstChild.id)
+                  // si el que sigue esta libre entoces come es igual a true
+                   //vr1=rrenglon%2==0? 4:5;
+                   //vr2=rrenglon%2==0?3:4;
+                   //vr3=rrenglon%2==0?4:3;
+                   vr4=renglon%2==0?5:4;
+                   //dsi=si==1?document.getElementById(padre.id*1-vr1):null;
+                   //dsd=sd==1?document.getElementById(padre.id*1-vr2):null;
+                   //dii=ii==1?document.getElementById(padre.id*1+vr3):null;
+                   var didt=id==1?document.getElementById(padre.id*1+vr4):null;
+                   if(!didt.children.length){
+                      	 comelones.push(document.getElementById(iter+i))
+                  	 comidos.push(did)
+                     destinos.push(didt)
+                       mostrar+="\nEste puede comer id"
+                       come=true 
+                    }
+               }
+           }
+           if(ccolumna>1 && rrenglon<7&&iii){
+               //puede comer por la parte superior izquierda
+                mostrar+="hijoii:"+dii.children.length
+                if(dii.children.length&& Math.ceil(dii.firstChild.id/112)!=turno){
+                    
+
+                   si=sd=ii=id=0;
+                   caculapadre(dii.firstChild.id)
+                  // si el que sigue esta libre entoces come es igual a true
+                   //vr1=rrenglon%2==0? 4:5;
+                  // vr2=rrenglon%2==0?3:4;
+                   vr3=renglon%2==0?4:3;
+                 //  vr4=rrenglon%2==0?5:4;
+                   //dsi=si==1?document.getElementById(padre.id*1-vr1):null;
+                   //dsd=sd==1?document.getElementById(padre.id*1-vr2):null;
+                  var  diit=ii==1?document.getElementById(padre.id*1+vr3):null;
+                   if(!diit.children.length){
+                      	 comelones.push(document.getElementById(iter+i))
+                  	 comidos.push(dii)
+                     destinos.push(diit)
+                      mostrar+="\nEste puede comer ii"
+                      come=true
+                    }
+                   //did=id==1?document.getElementById(padre.id*1+vr4):null;  
+                }
+              
+            } 
+            mostrar+="\ncomer"+come; 
+           }
+        }
+         //alert(mostrar) 
+
+        mover=movtemp
+        veractive=false
+    }
+    function mueve(idbq){
+        if(document.getElementById(idbq).children.length==0 && mover&&!hasperdido){
+            // alert("si"+si+"\nsd"+sd+"\nii"+ii+"\nid"+id);
+             if(turno==2)
+               divv.className="circuloW"
+             else
+               divv.className="circuloR"
+             haveanimaciondiv=false
+             if(dsi){
+	             	dsi.className="cNegra";haveanimacion=false
+	             }
+	              if(dsd){
+                  dsd.className="cNegra";haveanimacion=false
+              }
+	              if(dii){
+	             	dii.className="cNegra";haveanimacion=false
+	             }
+	              if(did){
+	             	did.className="cNegra";haveanimacion=false
+	             }
+              
+	            // alert("si"+si+"\nsd"+sd+"\nii"+ii+"\nid"+id);
+	            //alert("movido")
+	            
+	            // alert("id:"+idbq+"\nsi:"+(padre.id-vr1)+"\nsd:"+(padre.id-vr2)+"\nii:"+(padre.id*1+vr3)+"\nid:"+(padre.id*1+vr4))	
+	          if(!come){
+	            
+	            if(dsi!=null&&idbq==padre.id-vr1){
+	               padre.removeChild(divv); 
+	    	       dsi.appendChild(divv);	               
+                   if(turno==2 && bottom[(divv.id%112)-1]==0 && renglon==2){
+                       // alert("Te has coronado")
+                        var image = new Image(50, 50);
+                        image.src="corona1.svg"
+                  
+                        divv.appendChild(image)
+                        bottom[(divv.id%112)-1]=1;
+                    }	                  
+	                  turno=turno==2?1:2;Brillo()
+	            }
+	            if(dsd!=null&&idbq==padre.id-vr2){
+	               padre.removeChild(divv); 
+	    	       dsd.appendChild(divv);   
+                   if(turno==2 && bottom[(divv.id%112)-1]==0 && renglon==2){
+                        //alert("Te has coronado")
+                        var image = new Image(50, 50);
+                        image.src="corona1.svg"
+                  
+                        divv.appendChild(image)
+                        bottom[(divv.id%112)-1]=1;
+                    }
+                   //verificar si puede comer	          	  
+	          	      turno=turno==2?1:2;       Brillo()         
+	            }
+	            if(dii!=null&&idbq==padre.id*1+vr3){
+	               padre.removeChild(divv);
+	    	       dii.appendChild(divv);
+	    	       acomido=come; 
+                    if(turno==1 && lroja[(divv.id%100)-1]==0 && renglon==7){
+                       // alert("Te has coronado");
+                        var image = new Image(50, 50);
+                         image.src="corona2.svg"
+                  
+                        divv.appendChild(image)
+                        lroja[(divv.id%100)-1]=1;
+                        
+                    }
+                     
+	               //verificar si puede comer
+	    	          turno=turno==2?1:2;
+                   Brillo()
+	            }
+	            if(did!=null&&idbq==padre.id*1+vr4){
+	               padre.removeChild(divv);
+	    	       did.appendChild(divv);    
+                   acomido=come; 
+	                if(turno==1 && lroja[(divv.id%100)-1]==0 && renglon==7){
+                       // alert("Te has coronado")
+                        var image = new Image(50, 50);
+                        image.src="corona2.svg"                 
+                        divv.appendChild(image)
+                        lroja[(divv.id%100)-1]=1;
+
+                    }
+	    	          turno=turno==2?1:2; 
+                  Brillo()              
+                }
+             }else{        	
+			    //alert(comidas)
+			    if(itemp!=-1){
+			    	var fichao=document.getElementById(comelones[itemp].id);
+	                var divdestino=document.getElementById(destinos[itemp].id);
+	                var diveliminar=document.getElementById(comidos[itemp].id);	           
+	                fichao.parentNode.removeChild(fichao)
+	                divdestino.appendChild(fichao);
+                  divdestino.className="cNegra";haveanimacion=false
+	                diveliminar.removeChild( diveliminar.firstChild);
+	                //alert("Renglon final:"+Math.ceil(divdestino.id/4)+"\nturno:"+turno)
+                     console.log("comiendo y coronando:destino:"+Math.ceil(divdestino.id/4)+"turno:"+turno)
+                     if(divdestino.id/4==8)
+                     console.log(lroja[(fichao.id%100)-1])
+                     if(Math.ceil(divdestino.id/4)==8 && turno==1 && lroja[(fichao.id%100)-1]==0){
+                     	 var image = new Image(50, 50);
+                     	 lroja[(fichao.id%100)-1]=1
+                     	 //alert("coronado")
+                         image.src="corona1.svg"                 
+                        fichao.appendChild(image)
+                     }
+                     if(Math.ceil(divdestino.id/4)==1 && turno==2&&bottom[(fichao.id%112)-1]==0 ){
+                     	 var image = new Image(50, 50);
+                     	 bottom[(fichao.id%112)-1]=1 
+                     	 //alert("coronado")
+                         image.src="corona2.svg"                 
+                        fichao.appendChild(image)
+                     }
+
+
+	                puedecomer();
+	                // recorro todos y verifico quien puede comer
+                    var conta=comelones.length
+                     var comelones2=new Array()
+                     var  destinos2=new Array()
+                      var comidos2=new Array()
+		                come=false
+		                for(var i=0;i<conta;i++)
+		    	           if(fichao.id==comelones[i].id){
+		    		              come=true
+		    		              comelones2.push(comelones[i]);
+	                       destinos2.push(destinos[i]);
+	                			  comidos2.push(comidos[i]);
+		    		       }
+		    		       conta=comelones.length
+                         comelones=new Array()
+                         destinos=new Array()
+                         comidos=new Array()
+                         for(var i=0;i<conta;i++){
+                         	 comelones.push(comelones2[i]);
+	                              destinos.push(destinos2[i]);
+	                			  comidos.push(comidos2[i]);
+
+                         }   
+                                      
+		                
+
+	                turno==2?rojass--:guindas--;
+                
+	                if(guindas==0 ){
+	                	alert("Blancas han perdido")
+	                 hasperdido=true
+	                }
+	               if(rojass==0 ){
+	               	hasperdido=true
+	                	alert("Rojas han perdido")
+	                }
+                   if(!hasperdido)
+	                if(!come){
+	                	turno=turno==2?1:2;
+                    
+                  }
+                    Brillo()
+	           }
+
+            }
+        } else
+           if(hasperdido)
+            alert("Ya no se puede jugar")  
+            // el turno se cambia cuando ya no se puede hacer movimiento  
+        
+    }
+    function caculapadre(idss){
+    	 //alert(idss)
+
+    	 divv =document.getElementById(idss);//obtengo el id de la caja que contiene el circulo
+    	 if(divv!=null){
+    	 padre=divv.parentNode
+         
+         	
+        //padre.removeChild(divv)
+    	//document.getElementById("13").appendChild(divv);
+    	//var alertar="Idpadre:"+padre.id+"\n"
+    	//alertar=alertar+"tamaño:"+ document.getElementById("13").children.length+"\n"
+        columna=(padre.id%4==0?4:padre.id%4)
+        renglon=Math.ceil(padre.id/4);
+        //alertar=alertar+"presionado:"+ids+"\n";
+        //alertar=alertar+"Renglon:"+renglon+"\n"
+        //alertar=alertar+"Columna:"+columna+"\n";
+        si=1;sd=1;ii=1;id=1;
+        if(renglon ==1  ){
+         	if(columna==1){
+               si=0;sd=0;ii=0;  
+            }
+            else{
+             	si=0;sd=0;
+            }
+        }else if(columna==1 && renglon%2!=0){
+         	si=0;ii=0;
+        }else  if(renglon ==8 ){
+	        if(columna==4){
+	            ii=0;id=0;sd=0;
+	        }
+	        else{
+	            id=0;ii=0;
+	        } 
+        }else if(columna==4 && renglon%2==0){
+         	sd=0;id=0;
+        }
+        if(turno==1 && lroja[(divv.id%100)-1]==0){
+	          	// mueven rojas hacia abajo
+	          	//alert("Rojas hacia abajo")
+	               si=0;sd=0;
+	        }else if( turno==2 && bottom[(divv.id%112)-1]==0){
+	          	  //alert("Blancas hacia arriba")
+	          	  ii=0;id=0;
+	        }
+
+       }else
+        console.log("div no encontrado")
+
+    }
+  function Brillo(){
+    if(turno==1){
+    document.getElementById("P1").className ='brillo1';
+    document.getElementById("P2").className ='PlayerTwo';
+  }else{
+    document.getElementById("P2").className ='brillo2';
+    document.getElementById("P1").className ='PlayerOne';
+  }
+}
+    // calcula los posibles movimientos e indica el turno
+    function seleccionado(ids){
+     
+    	if(!hasperdido){
+        Brillo();
+        if(haveanimaciondiv&&Math.ceil(divv.id/112)==turno){
+           if(turno==2)
+           divv.className="circuloW"
+          else
+            divv.className="circuloR"
+          
+              
+        }
+          if(dsi){
+                dsi.className="cNegra";haveanimacion=false
+               }
+                if(dsd){
+                  dsd.className="cNegra";haveanimacion=false
+              }
+                if(dii){
+                dii.className="cNegra";haveanimacion=false
+               }
+                if(did){
+                did.className="cNegra";haveanimacion=false
+               }
+    		if(haveanimaciona){
+    		    if(dsi&&mover&&!dsi.children.length)
+            	dsi.className="cNegra"
+           
+            if(dsd&&mover&&!dsd.children.length)
+            	dsd.className="cNegra"
+            if(dii&&mover&&!dii.children.length)
+            	dii.className="cNegra"
+            if(did&&mover&&!did.children.length)	
+            	did.className="cNegra"
+            haveanimaciona=false;
+         }
+    		//alert(ids)
+    	// los id de circuelo empizan en 101 y terminan en 124
+    	//los id de los contenedores empiezan en 1 y terminan en 64
+         if(!come)
+        puedecomer(); // si come es verdadero ya no hago nada 
+        //y espero hasta que el elemento seleccionado coincida con uno de los que puede comer
+        caculapadre(ids)
+        if(!sd&&!si&&!ii&&!id&&(rojass==1&&turno==1||guindas==1&&turno==2)){
+              hasperdido=true
+              if(turno==2)
+                alert("Blancas pierden")
+                else
+                  alert("rojass pierden")
+         }
+        //console.log("Animando:"+divv.id)
+        //divv =document.getElementById(ids);//obtengo el id de la caja que contiene el circulo
+    	//padre=divv.parentNode
+      
+        //padre.removeChild(divv)
+    	//document.getElementById("13").appendChild(divv);
+    	if(!hasperdido){
+    	var alertar="Idpadre:"+padre.id+"\n"
+    	alertar=alertar+"tamaño:"+ document.getElementById("13").children.length+"\n"
+        //columna=(padre.id%4==0?4:padre.id%4)
+        //renglon=Math.ceil(padre.id/4);
+        alertar=alertar+"presionado:"+ids+"\n";
+        alertar=alertar+"Renglon:"+renglon+"\n"
+        alertar=alertar+"Columna:"+columna+"\n";
+        //si=1;sd=1;ii=1;id=1;
+     
+      if(!veractive&&Math.ceil(divv.id/112)==turno){
+            mover=true;
+            if(turno==1 &&!come)
+              divv.className="animacionr"
+            else
+              if(!come)
+            divv.className="animacionw"  
+         haveanimaciondiv=true
+        }
+        else
+          mover=false
+        if(!come){
+            
+          //divv.className="animacion"
+	        
+	            //alert("moviendo")
+	            
+            vr1=renglon%2==0? 4:5;
+            vr2=renglon%2==0?3:4;
+            vr3=renglon%2==0?4:3;
+            vr4=renglon%2==0?5:4;
+            dsi=si==1?document.getElementById(padre.id*1-vr1):null;
+            dsd=sd==1?document.getElementById(padre.id*1-vr2):null;
+            dii=ii==1?document.getElementById(padre.id*1+vr3):null;
+            did=id==1?document.getElementById(padre.id*1+vr4):null;
+
+            if(dsi&&mover&&!dsi.children.length){
+            	dsi.className="animate"
+            }
+           
+            if(dsd&&mover&&!dsd.children.length){
+            	dsd.className="animate";haveanimaciona=true
+            }
+            if(dii&&mover&&!dii.children.length){
+            	dii.className="animate";;haveanimaciona=true
+            }
+            if(did&&mover&&!did.children.length){	
+            	did.className="animate";haveanimaciona=true
+            }
+		}else{
+			var comidas="Tienes que comer"
+			comidas+="\nLos que comen son:"+comelones.length
+			comidas+="\nLos comidos son:"+comidos.length
+			comidas+="\nLos destinos son:"+destinos.length+"\n\n"
+		     itemp=-1
+		    var conta=comelones.length
+		    for(var i=0;i<conta;i++){
+		    	if(ids==comelones[i].id)
+		    		itemp=i
+               comidas+="Esta ficha:"+comelones[i].id+"\n"
+               comidas+="come a:"+comidos[i].id+"\n"
+               comidas+="y llega a:"+destinos[i].id+"\n"
+               document.getElementById(destinos[i].id).className="cNegra";haveanimaciona=false
+               
+		    } 
+		    //alert(comidas)
+		    if(itemp!=-1){
+            document.getElementById(destinos[itemp].id).className="animate";haveanimaciona=true
+            if(turno==2)
+            document.getElementById(comelones[itemp].id).className="animacionw";
+          else
+            document.getElementById(comelones[itemp].id).className="animacionr";
+
+            haveanimaciondiv=true
+            }
+
+		}
+        alertar=alertar+"si:"+si+"\nsd:"+sd+"\nii:"+ii+"\nid:"+id
+        //alert(alertar+"\nMover:"+mover); 	
+    	//var divpos=document.getElementById("20")
+    	//divpos.className="animate"
+    	//if(padre.id==42)
+    	//alert("presionado:"+id)
+       }
+      }else
+      alert("Ya no puedes jugar")
+    }
+    // inserta los divs y los circulos al dom
+    function createNewElement(band,j){ 
+       	var div = document.createElement("div");
+        if(band){
+            div.id =idd;
+            div.setAttribute("onclick","mueve("+idd+")");
+            idd+=1;
+            div.className = "cNegra"
+            if(j<3||j>4){
+                circles++;
+                var divi= document.createElement("div")
+                divi.id=""+circles
+                if(j<3){
+                 divi.className="circuloR";
+                }
+                else{
+                  divi.className="circuloW";	
+                 // var image=document.createElement("img")
+
+                }
+                divi.setAttribute("onclick","seleccionado("+circles+")");      
+                div.appendChild(divi)
+            }
+        }else{
+            div.className ="cCafe"
+            div.id=0;
+        }
+        divren.appendChild(div);
+    }   
+</script>
+</body>
+</html>

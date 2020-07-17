@@ -12,7 +12,7 @@ import EditBoardScreen from './components/EditBoardScreen';
 import {Button } from 'react-native-elements';
 //import EditBoardScreen from './components/EditBoardScreenRxdb';
 import {decode, encode} from 'base-64';
-
+import pantallaInicial from './components/pantallaInicial';
 // este código es por un bug que tiene la librería para conectarse a firestore
 if (!global.btoa) {  global.btoa = encode }
 if (!global.atob) { global.atob = decode }
@@ -31,7 +31,7 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Board">
+      <Stack.Navigator initialRouteName="pantallaInicial">
         <Stack.Screen name="Board" component={BoardScreen}
                       options={({ navigation }) => ({ 
                           title: 'Boards', 
@@ -43,6 +43,9 @@ export default function App() {
                             />
                           ),
                           })} />
+        <Stack.Screen name="pantallaInicial" component={pantallaInicial} 
+          options={{ title: 'pantallaInicial' }}/>
+       
         <Stack.Screen name="BoardDetails" component={BoardDetailScreen} 
           options={{ title: 'Board Details' }}/>
         <Stack.Screen name="AddBoard" component={AddBoardScreen} 
